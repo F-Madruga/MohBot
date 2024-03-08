@@ -1,8 +1,9 @@
 import { REST, Routes } from 'discord.js';
 import logger from './logger';
+import { Command } from '../types/command';
 
 export default async function registerCommands(
-    commands: any,
+    commands: Command[],
     discordToken: string,
     discordClientId: string,
 ) {
@@ -12,11 +13,11 @@ export default async function registerCommands(
         logger.info('Registering commands...');
 
         await rest.put(Routes.applicationCommands(discordClientId), {
-            body: commands,
+            body: commands.map((command: Command) => command.toJSON()),
         });
 
         logger.info('Successfully register commands');
     } catch (error) {
-        throw new Error('Failed to register commands', error);
+        logger.error(error);
     }
 }
