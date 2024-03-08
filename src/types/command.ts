@@ -1,4 +1,4 @@
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { Client, CommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 export class Command extends SlashCommandBuilder {
     handler: CommandHandler;
@@ -10,8 +10,12 @@ export class Command extends SlashCommandBuilder {
 
 export type CommandHandlerArgs = {
     interaction: CommandInteraction;
+    commands: Map<string, Command>;
+    client: Client;
 };
 
 export type CommandHandler = ({
     interaction,
+    commands,
+    client,
 }: CommandHandlerArgs) => Promise<void>;

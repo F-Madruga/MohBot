@@ -1,15 +1,17 @@
 import { Client, GatewayIntentBits } from 'discord.js';
 import commands from './commands';
-import env from './env';
+import env, { NodeEnv } from './env';
 import logger from './tools/logger';
 import registerCommands from './tools/register-commands';
 
 async function main() {
-    await registerCommands(
-        Array.from(commands.values()),
-        env.DISCORD_TOKEN,
-        env.DISCORD_CLIENT_ID,
-    );
+    if (env.NODE_ENV === NodeEnv.PROD) {
+        await registerCommands(
+            Array.from(commands.values()),
+            env.DISCORD_TOKEN,
+            env.DISCORD_CLIENT_ID,
+        );
+    }
 
     const client = new Client({
         intents: [
@@ -44,7 +46,7 @@ async function main() {
         logger.info(`Receive command: ${interaction.commandName}`);
 
         try {
-            await command.handler({ interaction });
+            await command.handler({ interaction, commands, client });
         } catch (error) {
             logger.error(error);
             await interaction.reply({ content: 'Something went wrong' });
