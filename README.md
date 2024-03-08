@@ -1,4 +1,2 @@
 # MohBot
-
-First commit
-Cenas
+MAMBOS QUENTES
