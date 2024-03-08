@@ -16,10 +16,10 @@
   "homepage": "https://github.com/F-Madruga/MohBot#readme",
   "scripts": {
     "start": "node --env-file=./.env dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "dev": "nodemon --env-file=.env dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint-staged": "lint-staged"
