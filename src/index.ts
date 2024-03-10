@@ -53,11 +53,34 @@ async function main() {
 
         logger.info(`Receive command: ${interaction.commandName}`);
 
+        let args;
+
         try {
-            await command.handler({ interaction, commands, client, player });
+            args = command.validator
+                ? command.validator({ interaction })
+                : undefined;
         } catch (error) {
             logger.error(error);
+
+            await interaction.reply({ content: 'Wrong input data' });
+
+            return;
+        }
+
+        try {
+            await command.handler({
+                interaction,
+                commands,
+                client,
+                player,
+                args,
+            });
+        } catch (error) {
+            logger.error(error);
+
             await interaction.reply({ content: 'Something went wrong' });
+
+            return;
         }
 
         logger.info(`Successfuly executed command: ${interaction.commandName}`);

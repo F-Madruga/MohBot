@@ -25,7 +25,7 @@ export const envSchema = Type.Object({
     LOGGER_LEVEL: LogLevelSchema,
     DISCORD_TOKEN: Type.String(),
     DISCORD_CLIENT_ID: Type.String(),
-    // DISCORD_GUILD_ID: Type.String(),
+    DISCORD_GUILD_ID: Type.String(),
 });
 
 export default Value.Decode(envSchema, {
@@ -33,5 +33,5 @@ export default Value.Decode(envSchema, {
     LOGGER_LEVEL: process.env.LOGGER_LEVEL,
     DISCORD_TOKEN: process.env.DISCORD_TOKEN,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
-    // DISCORD_GUILD_ID: process.env.DISCORD_GUILD_ID,
+    DISCORD_GUILD_ID: process.env.DISCORD_GUILD_ID,
 });
