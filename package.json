@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@sinclair/typebox": "0.32.15",
+    "discord-player": "6.6.7",
     "discord.js": "14.14.1",
     "pino": "8.19.0",
     "pino-pretty": "10.3.1"

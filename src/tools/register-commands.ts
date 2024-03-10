@@ -13,7 +13,9 @@ export default async function registerCommands(
         logger.info('Registering commands...');
 
         await rest.put(Routes.applicationCommands(discordClientId), {
-            body: commands.map((command: Command) => command.toJSON()),
+            body: commands.map((command: Command) =>
+                command.properties.toJSON(),
+            ),
         });
 
         logger.info('Successfully register commands');

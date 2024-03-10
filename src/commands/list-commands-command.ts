@@ -1,8 +1,12 @@
-import { Command, CommandHandlerArgs } from '../types/command';
+import { SlashCommandBuilder } from 'discord.js';
+import { CommandHandlerArgs } from '../types/command';
 
-export default new Command(handler)
-    .setName('listcommands')
-    .setDescription('List all available commands');
+export default {
+    properties: new SlashCommandBuilder()
+        .setName('listcommands')
+        .setDescription('List all available commands'),
+    handler,
+};
 
 async function handler({
     interaction,
@@ -11,7 +15,7 @@ async function handler({
     let result = '';
 
     for (let command of commands.values()) {
-        result += `**${command.name}**: ${command.description}\n`;
+        result += `**${command.properties.name}**: ${command.properties.description}\n`;
     }
 
     await interaction.reply({ content: result });

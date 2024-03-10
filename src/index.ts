@@ -3,6 +3,7 @@ import commands from './commands';
 import env, { NodeEnv } from './env';
 import logger from './tools/logger';
 import registerCommands from './tools/register-commands';
+import { Player } from 'discord-player';
 
 async function main() {
     if (env.NODE_ENV === NodeEnv.PROD) {
@@ -20,6 +21,13 @@ async function main() {
             GatewayIntentBits.DirectMessages,
             GatewayIntentBits.GuildVoiceStates,
         ],
+    });
+
+    const player = new Player(client, {
+        ytdlOptions: {
+            quality: 'highestaudio',
+            highWaterMark: 1 << 25,
+        },
     });
 
     client.on('ready', () => {
@@ -46,7 +54,7 @@ async function main() {
         logger.info(`Receive command: ${interaction.commandName}`);
 
         try {
-            await command.handler({ interaction, commands, client });
+            await command.handler({ interaction, commands, client, player });
         } catch (error) {
             logger.error(error);
             await interaction.reply({ content: 'Something went wrong' });
