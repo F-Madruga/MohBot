@@ -1,3 +1,1 @@
 # MohBot
-
-A discord bot
