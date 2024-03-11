@@ -57,7 +57,7 @@ async function main() {
 
         try {
             args = command.validator
-                ? command.validator({ interaction })
+                ? command.validator({ interaction, commands })
                 : undefined;
         } catch (error) {
             logger.error(error);

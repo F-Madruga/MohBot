@@ -32,7 +32,8 @@ const command: Command<PlayCommandArgs> = {
 
     validator: ({ interaction }: CommandValidatorArgs) => {
         return Value.Decode(PlayCommandSchema, {
-            query: interaction.options.get(PlayOptions.query)?.value,
+            [PlayOptions.query]: interaction.options.get(PlayOptions.query)
+                ?.value,
         });
     },
 

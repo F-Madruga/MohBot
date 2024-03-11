@@ -11,7 +11,7 @@ export type Command<CommandParams = undefined> = {
 
 export type CommandHandlerArgs<T = undefined> = {
     interaction: CommandInteraction;
-    commands: Map<string, Command>;
+    commands: Map<string, Command<any>>;
     client: Client;
     player: Player;
     args: T;
@@ -27,8 +27,10 @@ export type CommandHandler<T = undefined> = ({
 
 export type CommandValidatorArgs = {
     interaction: CommandInteraction;
+    commands: Map<string, Command<any>>;
 };
 
 export type CommandValidator<T = undefined> = ({
     interaction,
+    commands,
 }: CommandValidatorArgs) => T;
