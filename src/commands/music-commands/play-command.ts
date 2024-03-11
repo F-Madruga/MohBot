@@ -39,9 +39,27 @@ const command: Command<PlayCommandArgs> = {
 
     handler: async ({
         interaction,
-        args,
+        client,
+        config,
+        // player,
+        // args,
     }: CommandHandlerArgs<PlayCommandArgs>) => {
-        await interaction.reply({ content: `${JSON.stringify(args)}` });
+        const guild = await client.guilds.fetch(config.guildId);
+        const member = await guild.members.fetch(interaction.user.id);
+
+        const voiceChannel = member.voice.channel;
+
+        if (!voiceChannel) {
+            await interaction.reply({
+                content: 'You are not in a voice channel',
+            });
+
+            return;
+        }
+
+        await interaction.deferReply();
+
+        await interaction.reply({ content: 'Work in progress...' });
     },
 };
 

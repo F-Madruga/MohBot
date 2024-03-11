@@ -72,6 +72,11 @@ async function main() {
                 interaction,
                 commands,
                 client,
+                config: {
+                    token: env.DISCORD_TOKEN,
+                    clientId: env.DISCORD_CLIENT_ID,
+                    guildId: env.DISCORD_GUILD_ID,
+                },
                 player,
                 args,
             });
