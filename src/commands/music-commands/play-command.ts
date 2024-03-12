@@ -6,6 +6,7 @@ import {
 } from '../../types/command';
 import { Value } from '@sinclair/typebox/value';
 import { Type, type Static } from '@sinclair/typebox';
+import * as musicManager from '../../managers/music-manager';
 
 const PlayOptions = {
     query: 'query',
@@ -20,7 +21,9 @@ type PlayCommandArgs = Static<typeof PlayCommandSchema>;
 const command: Command<PlayCommandArgs> = {
     properties: new SlashCommandBuilder()
         .setName('play')
-        .setDescription('Play music in your voice chat')
+        .setDescription(
+            'Play music in your voice chat - available source: YouTube, Spotify, SoundCloud and Apple Music',
+        )
         .addStringOption((option) =>
             option
                 .setName(PlayOptions.query)
@@ -41,25 +44,16 @@ const command: Command<PlayCommandArgs> = {
         interaction,
         client,
         config,
-        // player,
-        // args,
+        player,
+        args,
     }: CommandHandlerArgs<PlayCommandArgs>) => {
-        const guild = await client.guilds.fetch(config.guildId);
-        const member = await guild.members.fetch(interaction.user.id);
-
-        const voiceChannel = member.voice.channel;
-
-        if (!voiceChannel) {
-            await interaction.reply({
-                content: 'You are not in a voice channel',
-            });
-
-            return;
-        }
-
-        await interaction.deferReply();
-
-        await interaction.reply({ content: 'Work in progress...' });
+        return musicManager.play({
+            interaction,
+            client,
+            config,
+            player,
+            query: args.query,
+        });
     },
 };
 

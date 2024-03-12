@@ -55,7 +55,7 @@ const command: Command<HelpCommandArgs> = {
 
         for (let option of requestedCommand.properties.options) {
             const optionJson = option.toJSON();
-            optionsString += `\`${optionJson.name}\`: ${optionJson.type.toString()} - ${optionJson.description}\n`;
+            optionsString += `- \`${optionJson.name}\`: ${optionJson.description}\n`;
         }
 
         await interaction.reply({

@@ -30,6 +30,18 @@ async function main() {
         },
     });
 
+    await player.extractors.loadDefault(
+        (extractor) =>
+            extractor !== 'AppleMusicExtractor' &&
+            extractor !== 'AttachmentExtractor' &&
+            extractor !== 'ReverbnationExtractor' &&
+            extractor !== 'VimeoExtractor',
+    );
+
+    player.events.on('playerStart', (queue, track) => {
+        queue.metadata.channel.send(`Started playing **${track.title}**!`);
+    });
+
     client.on('ready', () => {
         logger.info('Successfully started discord bot');
     });

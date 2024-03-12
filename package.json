@@ -28,8 +28,11 @@
     "@sinclair/typebox": "0.32.15",
     "discord-player": "6.6.7",
     "discord.js": "14.14.1",
+    "ffmpeg-static": "5.2.0",
+    "mediaplex": "0.0.9",
     "pino": "8.19.0",
-    "pino-pretty": "10.3.1"
+    "pino-pretty": "10.3.1",
+    "youtube-ext": "1.1.16"
   },
   "devDependencies": {
     "@types/node": "20.11.25",
