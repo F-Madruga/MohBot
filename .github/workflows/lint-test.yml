@@ -19,10 +19,7 @@ jobs:
     DISCORD_GUILD_ID: DISCORD_GUILD_ID
 
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 2
+    - uses: actions/checkout@v4
 
     - name: Use Node.js 20.11
       uses: actions/setup-node@v4
