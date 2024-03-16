@@ -21,13 +21,13 @@ made among friends for friends
 
 ### 1 - Install dependencies
 
-#### 1.1 Make sure you're using the correct node version
+#### 1.1 - Make sure you're using the correct node version
 
 ```shell
 nvm use
 ```
 
-#### 1.2 Install dependencies
+#### 1.2 - Install dependencies
 
 ```shell
 npm i
@@ -57,13 +57,13 @@ Usefull link to setup the discord bot:
   actual value):
   https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&guild_id=GUILD_ID$permissions=8
 
-### 3 Build MohBot
+### 3 - Build MohBot
 
 ```shell
 npm run build
 ```
 
-### 4 Start MohBot
+### 4 - Start MohBot
 
 ```shell
 npm start
