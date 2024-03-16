@@ -9,7 +9,7 @@ const command: Command = {
     handler: async ({ interaction, commands }: CommandHandlerArgs) => {
         let result = '';
 
-        for (let command of commands.values()) {
+        for (const command of commands.values()) {
             result += `**${command.properties.name}**: ${command.properties.description}\n`;
         }
 

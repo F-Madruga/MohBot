@@ -53,7 +53,7 @@ const command: Command<HelpCommandArgs> = {
 
         let optionsString = '';
 
-        for (let option of requestedCommand.properties.options) {
+        for (const option of requestedCommand.properties.options) {
             const optionJson = option.toJSON();
             optionsString += `- \`${optionJson.name}\`: ${optionJson.description}\n`;
         }

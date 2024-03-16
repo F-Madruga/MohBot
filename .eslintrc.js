@@ -7,9 +7,10 @@ module.exports = {
     extends: [
         'eslint:recommended',
         'plugin:import/recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
+        'plugin:import/typescript',
         'prettier',
-        'plugin:node/recommend',
     ],
     overrides: [],
     parser: '@typescript-eslint/parser',
@@ -23,6 +24,8 @@ module.exports = {
         'quotes': ['error', 'single'],
         'semi': ['error', 'always'],
         'prettier/prettier': 'error',
-        'no-unused-vars': 'error',
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': ['error'],
+        '@typescript-eslint/no-explicit-any': 'warn',
     },
 };

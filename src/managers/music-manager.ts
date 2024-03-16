@@ -175,7 +175,7 @@ export async function listQueue({ interaction, config }: ListQueueArgs) {
 
     let result = '';
 
-    for (let track of previousTracks) {
+    for (const track of previousTracks) {
         result += `${track.title}\n`;
     }
 
@@ -183,7 +183,7 @@ export async function listQueue({ interaction, config }: ListQueueArgs) {
         result += `**-> ${currentTrack.title}**\n`;
     }
 
-    for (let track of tracks) {
+    for (const track of tracks) {
         result += `${track.title}\n`;
     }
 
