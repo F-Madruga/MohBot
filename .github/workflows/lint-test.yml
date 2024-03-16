@@ -1,4 +1,4 @@
-name: 'lint & test'
+name: 'lint-test'
 
 on:
   pull_request:
@@ -11,28 +11,31 @@ on:
 jobs:
   lint-test:
     runs-on: ubuntu-latest
-  env:
-    NODE_ENV: test
-    LOGGER_LEVEL: debug
-    DISCORD_TOKEN: DISCORD_TOKEN
-    DISCORD_CLIENT_ID: DISCORD_CLIENT_ID
-    DISCORD_GUILD_ID: DISCORD_GUILD_ID
+    env:
+      NODE_ENV: test
+      LOGGER_LEVEL: debug
+      DISCORD_TOKEN: DISCORD_TOKEN
+      DISCORD_CLIENT_ID: DISCORD_CLIENT_ID
+      DISCORD_GUILD_ID: DISCORD_GUILD_ID
 
-  steps:
-    - uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
-    - name: Use Node.js 20.11
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.11
-        cache: 'npm'
-        cache-dependency-path: package-lock.json
+      - name: Use Node.js 20.11
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.11
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Lint
-      run: npm run lint
+      - name: Lint
+        run: npm run lint
 
-    - name: Run tests
-      run: npm test
+      - name: Run tests
+        run: npm test
