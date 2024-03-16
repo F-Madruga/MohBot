@@ -11,8 +11,8 @@ made among friends for friends
 
 **Francisco Madruga** <br>
 [`LinkedIn Profile`](https://www.linkedin.com/in/francisco-madruga-0694971b4)
-<br> [`Git Profile`](https://github.com/F-Madruga) <br>
+<br> [`GitHub Profile`](https://github.com/F-Madruga) <br>
 
 **Pedro Nogueira** <br>
 [`LinkedIn Profile`](https://www.linkedin.com/in/pedroinogueira/) <br>
-[`Git Profile`](https://github.com/Pedro-No) <br>
+[`GitHub Profile`](https://github.com/Pedro-No) <br>
