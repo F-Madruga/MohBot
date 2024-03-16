@@ -11,7 +11,6 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:import/typescript',
         'prettier',
-        // 'plugin:node/recommended',
     ],
     overrides: [],
     parser: '@typescript-eslint/parser',
