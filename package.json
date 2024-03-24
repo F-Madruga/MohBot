@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/F-Madruga/MohBot#readme",
   "scripts": {
-    "start": "node --env-file=./.env dist/index.js",
+    "start": "node dist/index.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
     "dev": "nodemon --env-file=.env dist/index.js",
@@ -35,6 +35,7 @@
     "youtube-ext": "1.1.16"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "0.5.3",
     "@types/node": "20.11.25",
     "@typescript-eslint/eslint-plugin": "7.2.0",
     "@typescript-eslint/parser": "7.2.0",
