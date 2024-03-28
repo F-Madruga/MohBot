@@ -40,6 +40,7 @@ async function main() {
 
     player.events.on('playerStart', (queue, track) => {
         queue.metadata.channel.send(`Started playing **${track.title}**!`);
+		client.user.setActivity(`${track.title}`, { type: "PLAYING" })
     });
 
     client.on('ready', () => {
