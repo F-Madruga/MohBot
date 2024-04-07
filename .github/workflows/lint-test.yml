@@ -24,21 +24,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        working-directory: ./api
         with:
           fetch-depth: 2
 
       - name: Use Node.js 20.11
         uses: actions/setup-node@v4
+        working-directory: ./api
         with:
           node-version: 20.11
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
+        working-directory: ./api
         run: npm install
 
       - name: Lint
+        working-directory: ./api
         run: npm run lint
 
       - name: Run tests
+        working-directory: ./api
         run: npm test
