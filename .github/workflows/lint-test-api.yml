@@ -15,6 +15,9 @@ on:
 jobs:
   lint-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./api
     env:
       NODE_ENV: test
       LOGGER_LEVEL: debug
