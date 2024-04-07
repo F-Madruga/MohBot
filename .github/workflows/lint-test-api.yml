@@ -6,11 +6,6 @@ on:
       - api
     branches:
       - master
-  push:
-    path:
-      - api
-    branches:
-      - master
 
 jobs:
   lint-test:
