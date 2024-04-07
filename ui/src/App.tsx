@@ -1,5 +1,5 @@
 function App() {
-    return <div>Hello World</div>;
+    return <div>MohBot-ui development in progress</div>;
 }
 
 export default App;
