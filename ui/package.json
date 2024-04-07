@@ -21,7 +21,7 @@
     "preview": "vite preview",
     "test": "echo \"No test implemented\"",
     "format": "prettier --write .",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint .",
     "lint-staged": "lint-staged"
   },
   "engineStrict": true,
