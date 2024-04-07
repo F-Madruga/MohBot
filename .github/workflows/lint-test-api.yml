@@ -7,13 +7,13 @@ on:
   push:
     branches:
       - master
+  defaults:
+  run:
+    working-directory: api
 
 jobs:
   lint-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ../../api
     env:
       NODE_ENV: test
       LOGGER_LEVEL: debug
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: 20.11
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm install
