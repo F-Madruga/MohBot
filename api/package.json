@@ -14,7 +14,7 @@
     "url": "https://github.com/F-Madruga/MohBot/issues"
   },
   "homepage": "https://github.com/F-Madruga/MohBot#readme",
-  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "start": "node --env-file=./.env dist/index.js",
     "build": "tsc",
