@@ -11,9 +11,6 @@ on:
       - api
     branches:
       - master
-  defaults:
-    run:
-      working-directory: api
 
 jobs:
   lint-test:
