@@ -2,9 +2,13 @@ name: 'lint-test-api'
 
 on:
   pull_request:
+    path:
+      - api
     branches:
       - master
   push:
+    path:
+      - api
     branches:
       - master
   defaults:
