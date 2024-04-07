@@ -1,22 +1,29 @@
-name: 'lint-test'
+name: 'lint-test-ui'
 
 on:
   pull_request:
+    path:
+      - ui
     branches:
       - master
   push:
+    path:
+      - ui
     branches:
       - master
 
 jobs:
   lint-test:
     runs-on: ubuntu-latest
-    env:
-      NODE_ENV: test
-      LOGGER_LEVEL: debug
-      DISCORD_TOKEN: DISCORD_TOKEN
-      DISCORD_CLIENT_ID: DISCORD_CLIENT_ID
-      DISCORD_GUILD_ID: DISCORD_GUILD_ID
+    defaults:
+      run:
+        working-directory: ./ui
+    # env:
+    #   NODE_ENV: test
+    #   LOGGER_LEVEL: debug
+    #   DISCORD_TOKEN: DISCORD_TOKEN
+    #   DISCORD_CLIENT_ID: DISCORD_CLIENT_ID
+    #   DISCORD_GUILD_ID: DISCORD_GUILD_ID
 
     steps:
       - name: Checkout repository
@@ -29,7 +36,7 @@ jobs:
         with:
           node-version: 20.11
           cache: 'npm'
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: ui/package-lock.json
 
       - name: Install dependencies
         run: npm install
