@@ -9,6 +9,10 @@ made among friends for friends
 | [api](api) | Fastify api & Discord bot built with discord.js |
 | [ui](ui)   |                 React frontend                  |
 
+# Development
+
+https://github.com/users/F-Madruga/projects/2
+
 ## Contributors
 
 **Francisco Madruga** <br>
