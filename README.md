@@ -4,10 +4,10 @@ made among friends for friends
 
 ## Structure:
 
-| Codebase   |               Description               |
-| :--------- | :-------------------------------------: |
-| [api](api) | Fastify api & Bot built with discord.js |
-| [ui](ui)   |             React frontend              |
+| Codebase   |                   Description                   |
+| :--------- | :---------------------------------------------: |
+| [api](api) | Fastify api & Discord bot built with discord.js |
+| [ui](ui)   |                 React frontend                  |
 
 ## Contributors
 
