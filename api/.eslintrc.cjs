@@ -1,4 +1,5 @@
 module.exports = {
+    root: true,
     env: {
         browser: true,
         commonjs: true,
@@ -12,7 +13,7 @@ module.exports = {
         'plugin:import/typescript',
         'prettier',
     ],
-    overrides: [],
+    ignorePatterns: ['dist', '.eslintrc.cjs'],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 'latest',

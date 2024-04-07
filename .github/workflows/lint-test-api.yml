@@ -6,11 +6,6 @@ on:
       - api
     branches:
       - master
-  push:
-    path:
-      - api
-    branches:
-      - master
 
 jobs:
   lint-test:
@@ -18,6 +13,7 @@ jobs:
     defaults:
       run:
         working-directory: ./api
+    # If needed use GitHub secrets
     env:
       NODE_ENV: test
       LOGGER_LEVEL: debug
