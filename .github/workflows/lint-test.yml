@@ -9,7 +9,10 @@ on:
       - master
 
 jobs:
-  lint-test:
+  lint-test-api:
+    defaults:
+      run:
+        working-directory: api
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
