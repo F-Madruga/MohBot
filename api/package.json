@@ -1,5 +1,6 @@
 {
   "name": "MohBot-api",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "author": "Francisco Madruga <madruga.francisco@gmail.com>, Pedro Nogueira <pedr0.nogueira@hotmailcom>",
@@ -23,6 +24,10 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "lint-staged": "lint-staged"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": "20.11"
   },
   "dependencies": {
     "@sinclair/typebox": "0.32.15",

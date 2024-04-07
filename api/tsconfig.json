@@ -12,7 +12,8 @@
     "useUnknownInCatchVariables": false,
     "resolveJsonModule": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["./src"]
 }
