@@ -2,7 +2,7 @@
 
 made among friends for friends
 
-## Structure:
+## Structure
 
 | Codebase   |               Description               |
 | :--------- | :-------------------------------------: |
