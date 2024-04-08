@@ -13,7 +13,7 @@ export async function insertOne({ user }: InsertOneArgs) {
     users.push(transform(user));
     await fs.promises.writeFile(
         `../${DATABASE_PREFIX}${TABLE_NAME}.json`,
-        JSON.stringify(users),
+        JSON.stringify(users, null, 2),
         {
             flag: 'w',
         },
@@ -45,7 +45,7 @@ export async function updateOne({ user }: UpdateOneArgs) {
 
     await fs.promises.writeFile(
         `../${DATABASE_PREFIX}${TABLE_NAME}.json`,
-        JSON.stringify(users),
+        JSON.stringify(users, null, 2),
         {
             flag: 'w',
         },
