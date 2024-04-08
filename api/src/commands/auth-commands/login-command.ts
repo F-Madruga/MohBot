@@ -38,9 +38,9 @@ const command: Command<LoginArgs> = {
         });
     },
 
-    handler: async ({ interaction, args }: CommandHandlerArgs<LoginArgs>) => {
+    handler: async ({ interaction }: CommandHandlerArgs<LoginArgs>) => {
         await interaction.reply({
-            content: `${args.password}`,
+            content: 'Login command not implmented yet',
             ephemeral: true,
         });
     },
