@@ -6,6 +6,7 @@ import {
 } from '../../types/command';
 import { SlashCommandBuilder } from 'discord.js';
 import { Value } from '@sinclair/typebox/value';
+import * as userManager from '../../managers/user-manager';
 
 const SignUpOptions = {
     password: 'password',
@@ -42,7 +43,16 @@ const command: Command<SignUpCommandArgs> = {
         interaction,
         args,
     }: CommandHandlerArgs<SignUpCommandArgs>) => {
-        await interaction.reply({ content: `${args.password}` });
+        await userManager.createOne({
+            id: interaction.user.id,
+            username: interaction.user.username,
+            password: args.password,
+        });
+
+        await interaction.reply({
+            content: 'Account created',
+            ephemeral: true,
+        });
     },
 };
 

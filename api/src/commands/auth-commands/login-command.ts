@@ -39,7 +39,10 @@ const command: Command<LoginArgs> = {
     },
 
     handler: async ({ interaction, args }: CommandHandlerArgs<LoginArgs>) => {
-        await interaction.reply({ content: `${args.password}` });
+        await interaction.reply({
+            content: `${args.password}`,
+            ephemeral: true,
+        });
     },
 };
 

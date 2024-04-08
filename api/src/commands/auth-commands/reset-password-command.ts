@@ -42,7 +42,10 @@ const command: Command<ResetPasswordArgs> = {
         interaction,
         args,
     }: CommandHandlerArgs<ResetPasswordArgs>) => {
-        await interaction.reply({ content: `${args.password}` });
+        await interaction.reply({
+            content: `${args.password}`,
+            ephemeral: true,
+        });
     },
 };
 

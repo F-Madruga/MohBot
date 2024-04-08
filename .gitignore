@@ -1,3 +1,6 @@
+# Data
+database-table*
+
 # Logs
 logs
 *.log

@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@sinclair/typebox": "0.32.15",
+    "argon2": "0.40.1",
     "discord-player": "6.6.7",
     "discord.js": "14.14.1",
     "ffmpeg-static": "5.2.0",
