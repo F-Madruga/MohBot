@@ -22,8 +22,40 @@ export async function insertOne({ user }: InsertOneArgs) {
     return user;
 }
 
+type UpdateOneArgs = {
+    user: User;
+};
+
+export async function updateOne({ user }: UpdateOneArgs) {
+    users = JSON.parse(
+        await fs.promises.readFile(`../${DATABASE_PREFIX}${TABLE_NAME}.json`, {
+            encoding: 'utf-8',
+        }),
+    );
+
+    let updatedUser;
+
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id === user.id) {
+            updatedUser = user;
+            users[i] = transform(updatedUser);
+            break;
+        }
+    }
+
+    await fs.promises.writeFile(
+        `../${DATABASE_PREFIX}${TABLE_NAME}.json`,
+        JSON.stringify(users),
+        {
+            flag: 'w',
+        },
+    );
+
+    return updatedUser;
+}
+
 type GetOneArgs = {
-    user: Pick<User, 'username'>;
+    user: Pick<User, 'id'>;
 };
 
 export async function getOne({ user }: GetOneArgs) {
@@ -33,7 +65,7 @@ export async function getOne({ user }: GetOneArgs) {
         }),
     );
 
-    const result = users.find((userRow) => userRow.username === user.username);
+    const result = users.find((userRow) => userRow.id === user.id);
 
     return result ? reverseTransform(result) : undefined;
 }

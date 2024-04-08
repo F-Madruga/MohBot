@@ -6,6 +6,7 @@ import {
 } from '../../types/command';
 import { SlashCommandBuilder } from 'discord.js';
 import { Value } from '@sinclair/typebox/value';
+import * as userManager from '../../managers/user-manager';
 
 const ResetPasswordOptions = {
     password: 'password',
@@ -42,8 +43,14 @@ const command: Command<ResetPasswordArgs> = {
         interaction,
         args,
     }: CommandHandlerArgs<ResetPasswordArgs>) => {
+        await userManager.updateOne({
+            id: interaction.user.id,
+            username: interaction.user.username,
+            password: args.password,
+        });
+
         await interaction.reply({
-            content: `${args.password}`,
+            content: 'Account updated',
             ephemeral: true,
         });
     },
