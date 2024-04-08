@@ -11,13 +11,12 @@ export async function createOne({ id, username, password }: CreateOneArgs) {
     const existingUser = await userRepository.getOne({ user: { id } });
 
     if (existingUser) {
-        // TODO throw and handle error
         return;
     }
 
     const passwordHash = await argon2.hash(password);
 
-    await userRepository.insertOne({
+    return userRepository.insertOne({
         user: {
             id,
             username,
@@ -30,13 +29,12 @@ export async function updateOne({ id, username, password }: CreateOneArgs) {
     const existingUser = await userRepository.getOne({ user: { id } });
 
     if (!existingUser) {
-        // TODO throw and handle error
         return;
     }
 
     const passwordHash = await argon2.hash(password);
 
-    await userRepository.updateOne({
+    return userRepository.updateOne({
         user: {
             id,
             username,
