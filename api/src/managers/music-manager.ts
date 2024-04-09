@@ -23,17 +23,14 @@ export async function play({ interaction, discordBot, query }: PlayArgs) {
 
     await interaction.deferReply();
 
-    await interaction.followUp(`Loading **${query}**...`);
+    await interaction.followUp(`Adding **${query}** to queue...`);
 
     try {
         const { track } = await discordBot.player.play(voiceChannel, query, {
             nodeOptions: {
                 metadata: interaction,
             },
-            // fallbackSearchEngine: 'youtube',
         });
-
-        // ERR_NO_RESULT
 
         discordBot.log.info(track.extractor?.identifier);
 

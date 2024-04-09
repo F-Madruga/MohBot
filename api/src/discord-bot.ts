@@ -160,9 +160,14 @@ export default function discordBot({
                 );
             });
 
-            discordBot.player.events.on('playerError', (queue, error) => {
-                queue.metadata.channel.send(JSON.stringify(error));
-            });
+            discordBot.player.events.on(
+                'playerError',
+                (queue, _error, track) => {
+                    queue.metadata.channel.send(
+                        `Something went wrong when trying to play **${track.title}**`,
+                    );
+                },
+            );
 
             discordBot.client.on('ready', () => {
                 discordBot.log.info('Successfully started discord bot');
