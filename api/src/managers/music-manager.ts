@@ -1,22 +1,14 @@
 import { useHistory, useQueue } from 'discord-player';
 import { CommandHandlerArgs } from '../types/command';
 
-interface PlayArgs
-    extends Pick<
-        CommandHandlerArgs,
-        'interaction' | 'player' | 'client' | 'config'
-    > {
+interface PlayArgs extends Omit<CommandHandlerArgs, 'args'> {
     query: string;
 }
 
-export async function play({
-    interaction,
-    player,
-    client,
-    config,
-    query,
-}: PlayArgs) {
-    const guild = await client.guilds.fetch(config.guildId);
+export async function play({ interaction, discordBot, query }: PlayArgs) {
+    const guild = await discordBot.client.guilds.fetch(
+        discordBot.config.guildId,
+    );
     const member = await guild.members.fetch(interaction.user.id);
 
     const voiceChannel = member.voice.channel;
@@ -31,12 +23,19 @@ export async function play({
 
     await interaction.deferReply();
 
+    await interaction.followUp(`Loading **${query}**...`);
+
     try {
-        const { track } = await player.play(voiceChannel, query, {
+        const { track } = await discordBot.player.play(voiceChannel, query, {
             nodeOptions: {
                 metadata: interaction,
             },
+            // fallbackSearchEngine: 'youtube',
         });
+
+        // ERR_NO_RESULT
+
+        discordBot.log.info(track.extractor?.identifier);
 
         await interaction.followUp(`**${track.title}** enqueued!`);
     } catch (error) {
@@ -44,12 +43,12 @@ export async function play({
     }
 }
 
-interface StopArgs extends Pick<CommandHandlerArgs, 'interaction' | 'config'> {}
+interface StopArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
-export async function stop({ interaction, config }: StopArgs) {
+export async function stop({ interaction, discordBot }: StopArgs) {
     await interaction.deferReply();
 
-    const queue = useQueue(config.guildId);
+    const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
         await interaction.followUp('Currently there is no queue');
@@ -62,13 +61,12 @@ export async function stop({ interaction, config }: StopArgs) {
     await interaction.followUp('Music stopped');
 }
 
-interface PauseArgs
-    extends Pick<CommandHandlerArgs, 'interaction' | 'config'> {}
+interface PauseArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
-export async function pause({ interaction, config }: PauseArgs) {
+export async function pause({ interaction, discordBot }: PauseArgs) {
     await interaction.deferReply();
 
-    const queue = useQueue(config.guildId);
+    const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
         await interaction.followUp('Currently there is no queue');
@@ -87,13 +85,12 @@ export async function pause({ interaction, config }: PauseArgs) {
     await interaction.followUp('Music paused');
 }
 
-interface ResumeArgs
-    extends Pick<CommandHandlerArgs, 'interaction' | 'config'> {}
+interface ResumeArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
-export async function resume({ interaction, config }: ResumeArgs) {
+export async function resume({ interaction, discordBot }: ResumeArgs) {
     await interaction.deferReply();
 
-    const queue = useQueue(config.guildId);
+    const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
         await interaction.followUp('Currently there is no queue');
@@ -112,12 +109,12 @@ export async function resume({ interaction, config }: ResumeArgs) {
     await interaction.followUp('Music resumed');
 }
 
-interface SkipArgs extends Pick<CommandHandlerArgs, 'interaction' | 'config'> {}
+interface SkipArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
-export async function skip({ interaction, config }: SkipArgs) {
+export async function skip({ interaction, discordBot }: SkipArgs) {
     await interaction.deferReply();
 
-    const queue = useQueue(config.guildId);
+    const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
         await interaction.followUp('Currently there is no queue');
@@ -130,12 +127,12 @@ export async function skip({ interaction, config }: SkipArgs) {
     await interaction.followUp('Playing next music');
 }
 
-interface BackArgs extends Pick<CommandHandlerArgs, 'interaction' | 'config'> {}
+interface BackArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
-export async function back({ interaction, config }: BackArgs) {
+export async function back({ interaction, discordBot }: BackArgs) {
     await interaction.deferReply();
 
-    const history = useHistory(config.guildId);
+    const history = useHistory(discordBot.config.guildId);
 
     if (!history) {
         await interaction.followUp('There is no previous music');
@@ -148,12 +145,11 @@ export async function back({ interaction, config }: BackArgs) {
     await interaction.followUp('Playing previous music');
 }
 
-interface ListQueueArgs
-    extends Pick<CommandHandlerArgs, 'interaction' | 'config'> {}
+interface ListQueueArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
-export async function listQueue({ interaction, config }: ListQueueArgs) {
+export async function listQueue({ interaction, discordBot }: ListQueueArgs) {
     await interaction.deferReply();
-    const queue = useQueue(config.guildId);
+    const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
         await interaction.followUp('Currently there is no queue');
@@ -161,7 +157,7 @@ export async function listQueue({ interaction, config }: ListQueueArgs) {
         return;
     }
 
-    const history = useHistory(config.guildId);
+    const history = useHistory(discordBot.config.guildId);
 
     if (!history) {
         await interaction.followUp('There is no previous music');

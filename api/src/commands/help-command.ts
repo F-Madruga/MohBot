@@ -28,28 +28,32 @@ const command: Command<HelpCommandArgs> = {
                 .setRequired(true),
         ),
 
-    validator: ({ interaction, commands }: CommandValidatorArgs) => {
+    validator: ({ interaction }: CommandValidatorArgs) => {
         const helpOptions = Value.Decode(HelpCommandSchema, {
             [HelpOptions.commandName]: interaction.options.get(
                 HelpOptions.commandName,
             )?.value,
         });
 
-        if (!commands.has(helpOptions[HelpOptions.commandName])) {
-            throw new Error(`Cannot find command: ${HelpOptions.commandName}`);
-        }
-
         return helpOptions;
     },
 
     handler: async ({
         interaction,
-        commands,
+        discordBot,
         args,
     }: CommandHandlerArgs<HelpCommandArgs>) => {
         const { command } = args;
 
-        const requestedCommand = commands.get(command)!;
+        const requestedCommand = discordBot.commands.get(command);
+
+        if (!requestedCommand) {
+            await interaction.reply({
+                content: `Cannot find command: ${command}`,
+            });
+
+            return;
+        }
 
         let optionsString = '';
 

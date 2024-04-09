@@ -7,8 +7,8 @@ const command: Command = {
         .setName('pause')
         .setDescription('Pause music currently playing'),
 
-    handler: async ({ interaction, config }: CommandHandlerArgs) => {
-        return musicManager.pause({ interaction, config });
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
+        return musicManager.pause({ interaction, discordBot });
     },
 };
 

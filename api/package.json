@@ -29,6 +29,7 @@
     "node": "20.11"
   },
   "dependencies": {
+    "@discord-player/extractor": "4.4.7",
     "@sinclair/typebox": "0.32.15",
     "argon2": "0.40.1",
     "discord-player": "6.6.7",

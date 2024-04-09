@@ -7,8 +7,8 @@ const command: Command = {
         .setName('skip')
         .setDescription('Plays next music'),
 
-    handler: async ({ interaction, config }: CommandHandlerArgs) => {
-        return musicManager.skip({ interaction, config });
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
+        return musicManager.skip({ interaction, discordBot });
     },
 };
 

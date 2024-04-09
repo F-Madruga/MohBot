@@ -7,8 +7,8 @@ const command: Command = {
         .setName('back')
         .setDescription('Plays previous music'),
 
-    handler: async ({ interaction, config }: CommandHandlerArgs) => {
-        return musicManager.back({ interaction, config });
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
+        return musicManager.back({ interaction, discordBot });
     },
 };
 

@@ -42,17 +42,15 @@ const command: Command<PlayCommandArgs> = {
 
     handler: async ({
         interaction,
-        client,
-        config,
-        player,
+        discordBot,
         args,
     }: CommandHandlerArgs<PlayCommandArgs>) => {
+        const { query } = args;
+
         return musicManager.play({
             interaction,
-            client,
-            config,
-            player,
-            query: args.query,
+            discordBot,
+            query,
         });
     },
 };

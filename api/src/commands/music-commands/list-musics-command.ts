@@ -7,8 +7,8 @@ const command: Command = {
         .setName('listmusics')
         .setDescription('List all musics in queue'),
 
-    handler: async ({ interaction, config }: CommandHandlerArgs) => {
-        return musicManager.listQueue({ interaction, config });
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
+        return musicManager.listQueue({ interaction, discordBot });
     },
 };
 

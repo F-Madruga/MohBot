@@ -7,8 +7,8 @@ const command: Command = {
         .setName('resume')
         .setDescription('Resumes music currently playing'),
 
-    handler: async ({ interaction, config }: CommandHandlerArgs) => {
-        return musicManager.resume({ interaction, config });
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
+        return musicManager.resume({ interaction, discordBot });
     },
 };
 

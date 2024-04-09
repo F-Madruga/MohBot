@@ -6,10 +6,10 @@ const command: Command = {
         .setName('listcommands')
         .setDescription('List all available commands'),
 
-    handler: async ({ interaction, commands }: CommandHandlerArgs) => {
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
         let result = '';
 
-        for (const command of commands.values()) {
+        for (const command of discordBot.commands.values()) {
             result += `**${command.properties.name}**: ${command.properties.description}\n`;
         }
 
