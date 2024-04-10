@@ -173,18 +173,26 @@ export function discordBot({
                 player.extractors.register(SpotifyExtractor, {}),
             ]);
 
-            discordBot.player.events.on('playerStart', (queue, track) => {
-                queue.metadata.channel.send(
-                    `Started playing **${track.title}**!`,
-                );
+            discordBot.player.events.on('playerStart', async (queue, track) => {
+                try {
+                    await queue.metadata.channel.send(
+                        `Started playing **${track.title}**!`,
+                    );
+                } catch (error) {
+                    await errorHandler({ error, discordBot });
+                }
             });
 
             discordBot.player.events.on(
                 'playerError',
-                (queue, _error, track) => {
-                    queue.metadata.channel.send(
-                        `Something went wrong when trying to play **${track.title}**`,
-                    );
+                async (queue, _error, track) => {
+                    try {
+                        await queue.metadata.channel.send(
+                            `Something went wrong when trying to play **${track.title}**`,
+                        );
+                    } catch (error) {
+                        await errorHandler({ error, discordBot });
+                    }
                 },
             );
 
@@ -198,27 +206,33 @@ export function discordBot({
                     await onInteractionCreateListener({
                         interaction,
                         discordBot,
-                    }).catch((error) =>
-                        errorHandler({
-                            interaction: interaction.isCommand()
-                                ? interaction
-                                : undefined,
-                            discordBot,
-                            error,
-                        }),
+                    }).catch(
+                        async (error) =>
+                            await errorHandler({
+                                interaction: interaction.isCommand()
+                                    ? interaction
+                                    : undefined,
+                                discordBot,
+                                error,
+                            }),
                     ),
             );
 
-            discordBot.player.events.on('error', (_queue, error: Error) => {
-                discordBot.log.error(
-                    `UNEXPECTED ERROR\n${JSON.stringify(error, null, 2)}`,
-                );
-            });
+            discordBot.player.events.on(
+                'error',
+                async (_queue, error: Error) => {
+                    discordBot.log.error(
+                        `UNEXPECTED ERROR\n${JSON.stringify(error, null, 2)}`,
+                    );
+                    await errorHandler({ error, discordBot });
+                },
+            );
 
-            discordBot.client.on('error', (error: Error) => {
+            discordBot.client.on('error', async (error: Error) => {
                 discordBot.log.error(
                     `UNEXPECTED ERROR\n${JSON.stringify(error, null, 2)}`,
                 );
+                await errorHandler({ error, discordBot });
             });
 
             discordBot.client.login(discordBot.config.token);
