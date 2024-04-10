@@ -1,6 +1,5 @@
-import { Player } from 'discord-player';
-import { Client, CommandInteraction, SlashCommandBuilder } from 'discord.js';
-import { DiscordBotConfig } from './discord-bot';
+import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { DiscordBot } from '../discord-bot';
 
 export type Command<CommandParams = undefined> = {
     properties:
@@ -12,28 +11,20 @@ export type Command<CommandParams = undefined> = {
 
 export type CommandHandlerArgs<T = undefined> = {
     interaction: CommandInteraction;
-    commands: Map<string, Command<any>>;
-    client: Client;
-    config: DiscordBotConfig;
-    player: Player;
+    discordBot: DiscordBot;
     args: T;
 };
 
 export type CommandHandler<T = undefined> = ({
     interaction,
-    commands,
-    client,
-    config,
-    player,
+    discordBot,
     args,
 }: CommandHandlerArgs<T>) => Promise<void>;
 
 export type CommandValidatorArgs = {
     interaction: CommandInteraction;
-    commands: Map<string, Command<any>>;
 };
 
 export type CommandValidator<T = undefined> = ({
     interaction,
-    commands,
 }: CommandValidatorArgs) => T;

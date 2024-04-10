@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { Command, CommandHandlerArgs } from '../types/command';
+import { Command, CommandHandlerArgs } from '../types/discord-bot';
 
 const command: Command = {
     properties: new SlashCommandBuilder()

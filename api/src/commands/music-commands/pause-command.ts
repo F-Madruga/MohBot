@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { Command, CommandHandlerArgs } from '../../types/command';
+import { Command, CommandHandlerArgs } from '../../types/discord-bot';
 import * as musicManager from '../../managers/music-manager';
 
 const command: Command = {
@@ -7,8 +7,8 @@ const command: Command = {
         .setName('pause')
         .setDescription('Pause music currently playing'),
 
-    handler: async ({ interaction, config }: CommandHandlerArgs) => {
-        return musicManager.pause({ interaction, config });
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
+        return musicManager.pause({ interaction, discordBot });
     },
 };
 

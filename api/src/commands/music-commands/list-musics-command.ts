@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { Command, CommandHandlerArgs } from '../../types/command';
+import { Command, CommandHandlerArgs } from '../../types/discord-bot';
 import * as musicManager from '../../managers/music-manager';
 
 const command: Command = {
@@ -7,8 +7,8 @@ const command: Command = {
         .setName('listmusics')
         .setDescription('List all musics in queue'),
 
-    handler: async ({ interaction, config }: CommandHandlerArgs) => {
-        return musicManager.listQueue({ interaction, config });
+    handler: async ({ interaction, discordBot }: CommandHandlerArgs) => {
+        return musicManager.listQueue({ interaction, discordBot });
     },
 };
 

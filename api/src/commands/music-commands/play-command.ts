@@ -3,7 +3,7 @@ import {
     Command,
     CommandHandlerArgs,
     CommandValidatorArgs,
-} from '../../types/command';
+} from '../../types/discord-bot';
 import { Value } from '@sinclair/typebox/value';
 import { Type, type Static } from '@sinclair/typebox';
 import * as musicManager from '../../managers/music-manager';
@@ -42,17 +42,15 @@ const command: Command<PlayCommandArgs> = {
 
     handler: async ({
         interaction,
-        client,
-        config,
-        player,
+        discordBot,
         args,
     }: CommandHandlerArgs<PlayCommandArgs>) => {
+        const { query } = args;
+
         return musicManager.play({
             interaction,
-            client,
-            config,
-            player,
-            query: args.query,
+            discordBot,
+            query,
         });
     },
 };

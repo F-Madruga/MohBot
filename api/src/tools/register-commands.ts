@@ -1,6 +1,6 @@
 import { REST, Routes } from 'discord.js';
 import logger from './logger';
-import { Command } from '../types/command';
+import { Command } from '../types/discord-bot';
 
 export default async function registerCommands(
     commands: Command[],
