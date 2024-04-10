@@ -39,7 +39,7 @@ const command: Command<LoginArgs> = {
     },
 
     handler: async ({ interaction }: CommandHandlerArgs<LoginArgs>) => {
-        await interaction.reply({
+        await interaction.followUp({
             content: 'Login command not implmented yet',
             ephemeral: true,
         });

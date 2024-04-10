@@ -7,7 +7,7 @@ const command: Command = {
         .setDescription('Replies ok if the bot is healthy'),
 
     handler: async ({ interaction }: CommandHandlerArgs) => {
-        await interaction.reply({ content: 'ok' });
+        await interaction.followUp({ content: 'ok' });
     },
 };
 

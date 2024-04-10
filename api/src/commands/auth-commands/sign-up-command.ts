@@ -13,7 +13,7 @@ const SignUpOptions = {
 } as const;
 
 const SignUpCommandSchema = Type.Object({
-    [SignUpOptions.password]: Type.String(),
+    [SignUpOptions.password]: Type.String({ minLength: 3 }),
 });
 
 type SignUpCommandArgs = Static<typeof SignUpCommandSchema>;
@@ -50,7 +50,7 @@ const command: Command<SignUpCommandArgs> = {
         });
 
         if (!user) {
-            await interaction.reply({
+            await interaction.followUp({
                 content:
                     'Account already exist. If you forgot your password ou can reset it',
                 ephemeral: true,
@@ -59,7 +59,7 @@ const command: Command<SignUpCommandArgs> = {
             return;
         }
 
-        await interaction.reply({
+        await interaction.followUp({
             content: 'Account created',
             ephemeral: true,
         });

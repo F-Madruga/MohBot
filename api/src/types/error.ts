@@ -1,5 +1,12 @@
 import { LogLevel } from '../env';
 
+interface ErrorOptions {
+    level?: LogLevel;
+    code?: string;
+    status?: number;
+    message?: string;
+}
+
 export class ServerError extends Error implements NodeJS.ErrnoException {
     protected static readonly code: string;
 
@@ -7,6 +14,8 @@ export class ServerError extends Error implements NodeJS.ErrnoException {
     public code?: string;
     public status?: number;
     public isServerError?: boolean;
+    public data?: unknown;
+    public publicMessage?: string;
 
     constructor(
         err?: string | ServerError | NodeJS.ErrnoException,
@@ -50,6 +59,17 @@ export class ServerError extends Error implements NodeJS.ErrnoException {
         });
     }
 
+    public withContextualData(data: unknown) {
+        this.data = data;
+        return this;
+    }
+
+    public withPublicMessage(publicMessage: string) {
+        this.publicMessage = publicMessage;
+        return this;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public static constructorOf(err: any): boolean {
         return this.code === err?.code && this.name === err?.constructor?.name;
     }
@@ -60,13 +80,6 @@ export function isServerError(v: Error): v is ServerError {
         v.constructor.name === ServerError.name &&
         (v as ServerError).isServerError === true
     );
-}
-
-interface ErrorOptions {
-    level?: LogLevel;
-    code?: string;
-    status?: number;
-    message?: string;
 }
 
 const OriginalServerError = ServerError;

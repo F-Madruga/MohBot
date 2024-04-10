@@ -13,6 +13,7 @@ import signUpCommand from './auth-commands/sign-up-command';
 import resetPasswordCommand from './auth-commands/reset-password-command';
 import loginCommand from './auth-commands/login-command';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default new Map<string, Command<any>>([
     [healthcheckCommand.properties.name, healthcheckCommand],
     [listCommandsCommand.properties.name, listCommandsCommand],

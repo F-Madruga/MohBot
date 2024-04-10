@@ -1,4 +1,10 @@
-import { CacheType, Client, GatewayIntentBits, Interaction } from 'discord.js';
+import {
+    CacheType,
+    Client,
+    CommandInteraction,
+    GatewayIntentBits,
+    Interaction,
+} from 'discord.js';
 import { Command } from './types/command';
 import { Player } from 'discord-player';
 import { Logger } from 'pino';
@@ -11,6 +17,12 @@ import {
     VimeoExtractor,
     YoutubeExtractor,
 } from '@discord-player/extractor';
+import { isServerError } from './types/error';
+import {
+    ERR_COMMAND_NOT_FOUND,
+    ERR_INTERACTION_IS_NOT_A_COMMAND,
+} from './errors';
+import { LogLevel } from './env';
 
 export type DiscordBotConfig = {
     token: string;
@@ -21,6 +33,7 @@ export type DiscordBotConfig = {
 export type DiscordBot = {
     client: Client;
     config: DiscordBotConfig;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     commands: Map<string, Command<any>>;
     player: Player;
     log: Logger;
@@ -35,60 +48,65 @@ async function onInteractionCreateListener({
 }) {
     {
         if (!interaction.isCommand()) {
-            return;
+            throw new ERR_INTERACTION_IS_NOT_A_COMMAND().withContextualData({
+                interaction,
+            });
         }
+
+        await interaction.deferReply();
 
         const command = discordBot.commands.get(interaction.commandName);
 
         if (!command) {
-            discordBot.log.info(
-                `Command ${interaction.commandName} does not exist`,
-            );
-
-            await interaction.reply({
-                content: `Command ${interaction.commandName} does not exist`,
-            });
-
-            return;
+            throw new ERR_COMMAND_NOT_FOUND()
+                .withContextualData({ command: interaction.commandName })
+                .withPublicMessage(
+                    `Command ${interaction.commandName} does not exist`,
+                );
         }
 
         discordBot.log.info(`Receive command: ${interaction.commandName}`);
 
-        let args;
+        const args = command.validator
+            ? command.validator({ interaction })
+            : undefined;
 
-        try {
-            args = command.validator
-                ? command.validator({ interaction })
-                : undefined;
-        } catch (error) {
-            discordBot.log.error(error);
-
-            await interaction.reply({
-                content: 'Wrong input data',
-            });
-
-            return;
-        }
-
-        try {
-            await command.handler({
-                interaction,
-                discordBot,
-                args,
-            });
-        } catch (error) {
-            discordBot.log.error(error);
-
-            await interaction.reply({
-                content: 'Something went wrong',
-            });
-
-            return;
-        }
+        await command.handler({
+            interaction,
+            discordBot,
+            args,
+        });
 
         discordBot.log.info(
             `Successfuly executed command: ${interaction.commandName}`,
         );
+    }
+}
+
+async function errorHandler({
+    interaction,
+    discordBot,
+    error,
+}: {
+    interaction?: CommandInteraction;
+    discordBot: DiscordBot;
+    error: Error;
+}) {
+    let level = LogLevel.ERROR;
+    let publicMessage = 'Something went wrong';
+
+    if (isServerError(error)) {
+        level = error.level;
+
+        publicMessage = error.publicMessage || publicMessage;
+    }
+
+    discordBot.log[level](error);
+
+    if (interaction) {
+        await interaction.followUp({
+            content: publicMessage,
+        });
     }
 }
 
@@ -149,6 +167,7 @@ export default function discordBot({
                 );
             }
 
+            // TODO spotify extractor sometimes doesn't find music
             await Promise.all([
                 player.extractors.register(YoutubeExtractor, {}),
                 player.extractors.register(SpotifyExtractor, {}),
@@ -179,8 +198,28 @@ export default function discordBot({
                     await onInteractionCreateListener({
                         interaction,
                         discordBot,
-                    }),
+                    }).catch((error) =>
+                        errorHandler({
+                            interaction: interaction.isCommand()
+                                ? interaction
+                                : undefined,
+                            discordBot,
+                            error,
+                        }),
+                    ),
             );
+
+            discordBot.player.events.on('error', (_queue, error: Error) => {
+                discordBot.log.error(
+                    `UNEXPECTED ERROR\n${JSON.stringify(error, null, 2)}`,
+                );
+            });
+
+            discordBot.client.on('error', (error: Error) => {
+                discordBot.log.error(
+                    `UNEXPECTED ERROR\n${JSON.stringify(error, null, 2)}`,
+                );
+            });
 
             discordBot.client.login(discordBot.config.token);
         },

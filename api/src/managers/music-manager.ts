@@ -14,14 +14,12 @@ export async function play({ interaction, discordBot, query }: PlayArgs) {
     const voiceChannel = member.voice.channel;
 
     if (!voiceChannel) {
-        await interaction.reply({
+        await interaction.followUp({
             content: 'You are not in a voice channel',
         });
 
         return;
     }
-
-    await interaction.deferReply();
 
     await interaction.followUp(`Adding **${query}** to queue...`);
 
@@ -43,8 +41,6 @@ export async function play({ interaction, discordBot, query }: PlayArgs) {
 interface StopArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
 export async function stop({ interaction, discordBot }: StopArgs) {
-    await interaction.deferReply();
-
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
@@ -61,8 +57,6 @@ export async function stop({ interaction, discordBot }: StopArgs) {
 interface PauseArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
 export async function pause({ interaction, discordBot }: PauseArgs) {
-    await interaction.deferReply();
-
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
@@ -85,8 +79,6 @@ export async function pause({ interaction, discordBot }: PauseArgs) {
 interface ResumeArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
 export async function resume({ interaction, discordBot }: ResumeArgs) {
-    await interaction.deferReply();
-
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
@@ -109,8 +101,6 @@ export async function resume({ interaction, discordBot }: ResumeArgs) {
 interface SkipArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
 export async function skip({ interaction, discordBot }: SkipArgs) {
-    await interaction.deferReply();
-
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
@@ -127,8 +117,6 @@ export async function skip({ interaction, discordBot }: SkipArgs) {
 interface BackArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
 export async function back({ interaction, discordBot }: BackArgs) {
-    await interaction.deferReply();
-
     const history = useHistory(discordBot.config.guildId);
 
     if (!history) {
@@ -145,7 +133,6 @@ export async function back({ interaction, discordBot }: BackArgs) {
 interface ListQueueArgs extends Omit<CommandHandlerArgs, 'args'> {}
 
 export async function listQueue({ interaction, discordBot }: ListQueueArgs) {
-    await interaction.deferReply();
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {

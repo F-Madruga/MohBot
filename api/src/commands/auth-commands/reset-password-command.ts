@@ -50,7 +50,7 @@ const command: Command<ResetPasswordArgs> = {
         });
 
         if (!user) {
-            await interaction.reply({
+            await interaction.followUp({
                 content: 'User does not exist',
                 ephemeral: true,
             });
@@ -58,7 +58,7 @@ const command: Command<ResetPasswordArgs> = {
             return;
         }
 
-        await interaction.reply({
+        await interaction.followUp({
             content: 'Account updated',
             ephemeral: true,
         });
