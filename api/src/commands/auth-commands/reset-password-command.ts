@@ -3,7 +3,7 @@ import {
     Command,
     CommandHandlerArgs,
     CommandValidatorArgs,
-} from '../../types/command';
+} from '../../types/discord-bot';
 import { SlashCommandBuilder } from 'discord.js';
 import { Value } from '@sinclair/typebox/value';
 import * as userManager from '../../managers/user-manager';

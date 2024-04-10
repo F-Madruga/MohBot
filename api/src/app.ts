@@ -1,7 +1,7 @@
 import env, { NodeEnv } from './env';
-import discordBot from './discord-bot';
 import commands from './commands';
 import logger from './tools/logger';
+import { discordBot } from './types/discord-bot';
 
 export const bot = discordBot({
     config: {

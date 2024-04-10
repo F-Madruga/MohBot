@@ -1,5 +1,5 @@
 import { useHistory, useQueue } from 'discord-player';
-import { CommandHandlerArgs } from '../types/command';
+import { CommandHandlerArgs } from '../types/discord-bot';
 
 interface PlayArgs extends Omit<CommandHandlerArgs, 'args'> {
     query: string;

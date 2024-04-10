@@ -1,4 +1,4 @@
-import { Command } from '../types/command';
+import { Command } from '../types/discord-bot';
 import healthcheckCommand from './healthcheck-command';
 import listCommandsCommand from './list-commands-command';
 import helpCommand from './help-command';

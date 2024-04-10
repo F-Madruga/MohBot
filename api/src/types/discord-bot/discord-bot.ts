@@ -5,10 +5,10 @@ import {
     GatewayIntentBits,
     Interaction,
 } from 'discord.js';
-import { Command } from './types/command';
+import { Command } from './command';
 import { Player } from 'discord-player';
 import { Logger } from 'pino';
-import registerCommands from './tools/register-commands';
+import registerCommands from '../../tools/register-commands';
 import {
     AppleMusicExtractor,
     ReverbnationExtractor,
@@ -17,12 +17,12 @@ import {
     VimeoExtractor,
     YoutubeExtractor,
 } from '@discord-player/extractor';
-import { isServerError } from './types/error';
+import { isServerError } from '../error';
 import {
     ERR_COMMAND_NOT_FOUND,
     ERR_INTERACTION_IS_NOT_A_COMMAND,
-} from './errors';
-import { LogLevel } from './env';
+} from '../../errors';
+import { LogLevel } from '../../env';
 
 export type DiscordBotConfig = {
     token: string;
@@ -110,7 +110,7 @@ async function errorHandler({
     }
 }
 
-export default function discordBot({
+export function discordBot({
     config,
     commands,
     log,

@@ -3,7 +3,7 @@ import {
     Command,
     CommandHandlerArgs,
     CommandValidatorArgs,
-} from '../types/command';
+} from '../types/discord-bot';
 import { Value } from '@sinclair/typebox/value';
 import { Type, type Static } from '@sinclair/typebox';
 
