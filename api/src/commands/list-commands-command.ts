@@ -13,7 +13,7 @@ const command: Command = {
             result += `**${command.properties.name}**: ${command.properties.description}\n`;
         }
 
-        await interaction.followUp({ content: result });
+        await interaction.reply({ content: result });
     },
 };
 

@@ -1,11 +1,8 @@
 import { Static, Type } from '@sinclair/typebox';
-import {
-    Command,
-    CommandHandlerArgs,
-    CommandValidatorArgs,
-} from '../../types/discord-bot';
+import { Command, CommandValidatorArgs } from '../../types/discord-bot';
 import { SlashCommandBuilder } from 'discord.js';
 import { Value } from '@sinclair/typebox/value';
+import { ERR_COMMAND_NOT_FOUND } from '../../errors';
 
 const LoginOptions = {
     password: 'password',
@@ -38,11 +35,10 @@ const command: Command<LoginArgs> = {
         });
     },
 
-    handler: async ({ interaction }: CommandHandlerArgs<LoginArgs>) => {
-        await interaction.followUp({
-            content: 'Login command not implmented yet',
-            ephemeral: true,
-        });
+    handler: async () => {
+        throw new ERR_COMMAND_NOT_FOUND().withPublicMessage(
+            'Login command not implmented yet',
+        );
     },
 };
 

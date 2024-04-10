@@ -43,23 +43,13 @@ const command: Command<SignUpCommandArgs> = {
         interaction,
         args,
     }: CommandHandlerArgs<SignUpCommandArgs>) => {
-        const user = await userManager.createOne({
+        await userManager.createOne({
             id: interaction.user.id,
             username: interaction.user.username,
             password: args.password,
         });
 
-        if (!user) {
-            await interaction.followUp({
-                content:
-                    'Account already exist. If you forgot your password ou can reset it',
-                ephemeral: true,
-            });
-
-            return;
-        }
-
-        await interaction.followUp({
+        await interaction.reply({
             content: 'Account created',
             ephemeral: true,
         });

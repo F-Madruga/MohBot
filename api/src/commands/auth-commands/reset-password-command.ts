@@ -43,22 +43,13 @@ const command: Command<ResetPasswordArgs> = {
         interaction,
         args,
     }: CommandHandlerArgs<ResetPasswordArgs>) => {
-        const user = await userManager.updateOne({
+        await userManager.updateOne({
             id: interaction.user.id,
             username: interaction.user.username,
             password: args.password,
         });
 
-        if (!user) {
-            await interaction.followUp({
-                content: 'User does not exist',
-                ephemeral: true,
-            });
-
-            return;
-        }
-
-        await interaction.followUp({
+        await interaction.reply({
             content: 'Account updated',
             ephemeral: true,
         });

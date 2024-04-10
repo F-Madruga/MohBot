@@ -53,8 +53,6 @@ async function onInteractionCreateListener({
             });
         }
 
-        await interaction.deferReply();
-
         const command = discordBot.commands.get(interaction.commandName);
 
         if (!command) {
@@ -104,9 +102,17 @@ async function errorHandler({
     discordBot.log[level](error);
 
     if (interaction) {
-        await interaction.followUp({
-            content: publicMessage,
-        });
+        if (interaction.replied) {
+            await interaction.followUp({
+                content: publicMessage,
+                ephemeral: true,
+            });
+        } else {
+            await interaction.reply({
+                content: publicMessage,
+                ephemeral: true,
+            });
+        }
     }
 }
 

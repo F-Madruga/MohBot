@@ -14,14 +14,14 @@ export async function play({ interaction, discordBot, query }: PlayArgs) {
     const voiceChannel = member.voice.channel;
 
     if (!voiceChannel) {
-        await interaction.followUp({
+        await interaction.reply({
             content: 'You are not in a voice channel',
         });
 
         return;
     }
 
-    await interaction.followUp(`Adding **${query}** to queue...`);
+    await interaction.reply(`Adding **${query}** to queue...`);
 
     try {
         const { track } = await discordBot.player.play(voiceChannel, query, {
@@ -44,14 +44,14 @@ export async function stop({ interaction, discordBot }: StopArgs) {
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
-        await interaction.followUp('Currently there is no queue');
+        await interaction.reply('Currently there is no queue');
 
         return;
     }
 
     queue.delete();
 
-    await interaction.followUp('Music stopped');
+    await interaction.reply('Music stopped');
 }
 
 interface PauseArgs extends Omit<CommandHandlerArgs, 'args'> {}
@@ -60,20 +60,20 @@ export async function pause({ interaction, discordBot }: PauseArgs) {
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
-        await interaction.followUp('Currently there is no queue');
+        await interaction.reply('Currently there is no queue');
 
         return;
     }
 
     if (queue.node.isPaused()) {
-        await interaction.followUp('Music is already paused');
+        await interaction.reply('Music is already paused');
 
         return;
     }
 
     queue.node.setPaused(true);
 
-    await interaction.followUp('Music paused');
+    await interaction.reply('Music paused');
 }
 
 interface ResumeArgs extends Omit<CommandHandlerArgs, 'args'> {}
@@ -82,20 +82,20 @@ export async function resume({ interaction, discordBot }: ResumeArgs) {
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
-        await interaction.followUp('Currently there is no queue');
+        await interaction.reply('Currently there is no queue');
 
         return;
     }
 
     if (!queue.node.isPaused()) {
-        await interaction.followUp('Music is already playing');
+        await interaction.reply('Music is already playing');
 
         return;
     }
 
     queue.node.setPaused(false);
 
-    await interaction.followUp('Music resumed');
+    await interaction.reply('Music resumed');
 }
 
 interface SkipArgs extends Omit<CommandHandlerArgs, 'args'> {}
@@ -104,14 +104,14 @@ export async function skip({ interaction, discordBot }: SkipArgs) {
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
-        await interaction.followUp('Currently there is no queue');
+        await interaction.reply('Currently there is no queue');
 
         return;
     }
 
     queue.node.skip();
 
-    await interaction.followUp('Playing next music');
+    await interaction.reply('Playing next music');
 }
 
 interface BackArgs extends Omit<CommandHandlerArgs, 'args'> {}
@@ -120,14 +120,14 @@ export async function back({ interaction, discordBot }: BackArgs) {
     const history = useHistory(discordBot.config.guildId);
 
     if (!history) {
-        await interaction.followUp('There is no previous music');
+        await interaction.reply('There is no previous music');
 
         return;
     }
 
     history.previous();
 
-    await interaction.followUp('Playing previous music');
+    await interaction.reply('Playing previous music');
 }
 
 interface ListQueueArgs extends Omit<CommandHandlerArgs, 'args'> {}
@@ -136,28 +136,25 @@ export async function listQueue({ interaction, discordBot }: ListQueueArgs) {
     const queue = useQueue(discordBot.config.guildId);
 
     if (!queue) {
-        await interaction.followUp('Currently there is no queue');
+        await interaction.reply('Currently there is no queue');
 
         return;
     }
 
     const history = useHistory(discordBot.config.guildId);
 
-    if (!history) {
-        await interaction.followUp('There is no previous music');
+    let result = '';
 
-        return;
+    if (history) {
+        const previousTracks = history.tracks.toArray();
+
+        for (const track of previousTracks) {
+            result += `${track.title}\n`;
+        }
     }
 
     const currentTrack = queue.currentTrack;
-    const previousTracks = history.tracks.toArray();
     const tracks = queue.tracks.toArray();
-
-    let result = '';
-
-    for (const track of previousTracks) {
-        result += `${track.title}\n`;
-    }
 
     if (currentTrack) {
         result += `**-> ${currentTrack.title}**\n`;
@@ -167,5 +164,5 @@ export async function listQueue({ interaction, discordBot }: ListQueueArgs) {
         result += `${track.title}\n`;
     }
 
-    await interaction.followUp(result);
+    await interaction.reply(result);
 }

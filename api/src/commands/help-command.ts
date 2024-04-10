@@ -48,7 +48,7 @@ const command: Command<HelpCommandArgs> = {
         const requestedCommand = discordBot.commands.get(command);
 
         if (!requestedCommand) {
-            await interaction.followUp({
+            await interaction.reply({
                 content: `Cannot find command: ${command}`,
             });
 
@@ -62,7 +62,7 @@ const command: Command<HelpCommandArgs> = {
             optionsString += `- \`${optionJson.name}\`: ${optionJson.description}\n`;
         }
 
-        await interaction.followUp({
+        await interaction.reply({
             content: `**${requestedCommand.properties.name}**\n${requestedCommand.properties.description}\n${optionsString}`,
         });
     },
