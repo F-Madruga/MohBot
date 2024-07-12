@@ -1,11 +1,9 @@
 import { Player } from 'discord-player';
-import { Client, CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import { Client, CommandInteraction, SlashCommandOptionsOnlyBuilder } from 'discord.js';
 import { DiscordBotConfig } from './discord-bot';
 
 export type Command<CommandParams = undefined> = {
-    properties:
-        | SlashCommandBuilder
-        | Omit<SlashCommandBuilder, 'addSubcommand' | 'addSubcommandGroup'>;
+    properties: SlashCommandOptionsOnlyBuilder;
     handler: CommandHandler<CommandParams>;
     validator?: CommandValidator<CommandParams>;
 };
